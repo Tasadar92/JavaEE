@@ -41,58 +41,119 @@ public class Calculadora extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String op = request.getParameter("operacion");
-		Double op1;
-		Double op2;
+		Double op1 = null;
+		Double op2 = null;
 		Double result = null;
-		String error = null;
+		String error = null; String s = null; String blanc1 = null; String blanc2 = null;
 		
 		switch (op) {
 		case "suma":
 			
-			op1 = Double.parseDouble(request.getParameter("op1"));
-			op2 = Double.parseDouble(request.getParameter("op2"));
+			try {
+				s = request.getParameter("op1");
+				op1 = Double.parseDouble(s);
+				
+			}catch (Exception e) {
+				blanc1 = e.getMessage();
+			}			
 			
-			Suma_DAO s = new Suma_DAO(op1, op2);
+			try {
+				s = request.getParameter("op2");
+				op2 = Double.parseDouble(s);
+			}catch (Exception e) {
+				blanc2 = e.getMessage();
+			}
 			
-			result = s.operar();			
+			Suma_DAO sum;
+			
+			if(blanc1 == null && blanc2 == null) {
+				sum = new Suma_DAO(op1, op2);			
+				result = sum.operar();	
+			}
 
 			break;
 
 		case "resta":
 			
-			op1 = Double.parseDouble(request.getParameter("op1"));
-			op2 = Double.parseDouble(request.getParameter("op2"));
+			try {
+				s = request.getParameter("op1");
+				op1 = Double.parseDouble(s);
+				
+			}catch (Exception e) {
+				blanc1 = e.getMessage();
+			}			
 			
-			Resta_DAO r = new Resta_DAO(op1, op2);
+			try {
+				s = request.getParameter("op2");
+				op2 = Double.parseDouble(s);
+			}catch (Exception e) {
+				blanc2 = e.getMessage();
+			}
 			
-			result = r.operar();
+			Resta_DAO r;
+			
+			if(blanc1 == null && blanc2 == null) {
+				r = new Resta_DAO(op1, op2);			
+				result = r.operar();
+			}
 			
 			break;
 		
 		case "multi":
 			
-			op1 = Double.parseDouble(request.getParameter("op1"));
-			op2 = Double.parseDouble(request.getParameter("op2"));
+			try {
+				s = request.getParameter("op1");
+				op1 = Double.parseDouble(s);
+				
+			}catch (Exception e) {
+				blanc1 = e.getMessage();
+			}			
 			
-			Multiplicacion m = new Multiplicacion(op1, op2);
+			try {
+				s = request.getParameter("op2");
+				op2 = Double.parseDouble(s);
+			}catch (Exception e) {
+				blanc2 = e.getMessage();
+			}
 			
-			result = m.operar();
+			Multiplicacion m;
+			
+			if(blanc1 == null && blanc2 == null) {
+				m = new Multiplicacion(op1, op2);			
+				result = m.operar();
+			}
 			
 			break;
 			
 		case "div":
 			
-			op1 = Double.parseDouble(request.getParameter("op1"));
-			op2 = Double.parseDouble(request.getParameter("op2"));
-			
-			Division_DAO d = new Division_DAO(op1, op2);
+			try {
+				s = request.getParameter("op1");
+				op1 = Double.parseDouble(s);
+				
+			}catch (Exception e) {
+				blanc1 = e.getMessage();
+			}			
 			
 			try {
-				result = d.operar();
+				s = request.getParameter("op2");
+				op2 = Double.parseDouble(s);
 			}catch (Exception e) {
-				// TODO: handle exception
-				error = e.getMessage();
+				blanc2 = e.getMessage();
+			}
+			
+			Division_DAO d;
+			
+			if(blanc1 == null && blanc2 == null) {
+				d = new Division_DAO(op1, op2);
 				
+				try {
+					result = d.operar();
+				}catch (Exception e) {
+					// TODO: handle exception
+					error = e.getMessage();
+					
+				}
 			}
 			
 			break;
@@ -100,8 +161,19 @@ public class Calculadora extends HttpServlet {
 		
 		if(error != null)
 			request.setAttribute("result", error);
-		else
+		else {
+			if(blanc1 != null && blanc2 != null) {
+				request.setAttribute("blanc1", "Entrez un opérande");
+				request.setAttribute("blanc2", "Entrez un opérande");
+			}else
+				if(blanc1 != null)
+					request.setAttribute("blanc1", "Entrez un opérande");
+				else
+					if(blanc2 != null)
+						request.setAttribute("blanc2", "Entrez un opérande");
+			
 			request.setAttribute("result", result);
+		}
 		
 		request.getRequestDispatcher("/WEB-INF/FormCalc.jsp").forward(request, response);
 		

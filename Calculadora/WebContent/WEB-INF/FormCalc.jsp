@@ -8,11 +8,11 @@
 	</head>
 	<body>
 		<form action="Calculadora" method="post">
-			Operando 1:
-		    <input type="number" name="op1">
+			Operando 1: 
+		    <input type="number" name="op1"><span class="blanc1">	${blanc1}</span>
 		    <br/>
-		    Operando 2:
-		    <input type="number" name="op2">
+		    Operando 2: 
+		    <input type="number" name="op2"><span class="blanc2">	${blanc2}</span>
 		    <br/>
 		    
 		    <select name="operacion">
