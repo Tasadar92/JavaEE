@@ -5,11 +5,11 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title></title>
+		<title>Malicious URL Detection</title>
 	</head>
 	<body>
-		<h1>Bienvenido al sistema de deteccion de URLs maliciosas</h1>
-		<h2>¿Como desea hacer la comprobacion?</h2>
+		<h1>Malicious URL Detection Using Machine Learning</h1>
+		<h2>¿How do you want to do the test?</h2>
 		<div>
 			<form method="post" action="<c:url value="Index"/>">
 				<select name="option">

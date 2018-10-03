@@ -8,10 +8,11 @@
 		<link type="text/css" rel="stylesheet" href="<c:url value='/WEB-INF/static/style.css'/>" />
 	</head>
 	<body>
+		<c:import url="/WEB-INF/static/menu.jsp" />
 		<div id="corps">
             <p class="info">${form.resultat}</p>
-            <p>URL: <c:out value="${url.string}"/></p>
-            <p>Tag: <c:out value="${url.tag}"/></p>
+            <p>URL submitted by you is: <c:out value="${url.string}"/></p>
+            <p>My prediction is: <c:out value="${url.tag}"/></p>
         </div>
 	</body>
 </html>

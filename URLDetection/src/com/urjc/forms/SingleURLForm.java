@@ -1,6 +1,8 @@
 package com.urjc.forms;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,6 +10,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import com.urjc.dto.URL;
+import com.urjc.tokenizer.Tokenizer;
 
 public class SingleURLForm {
 
@@ -33,6 +36,7 @@ public class SingleURLForm {
     	String string = getFieldValue(request, FIELD_URL);
     	
     	URL url = new URL();
+    	Tokenizer tk = new Tokenizer();
     	
     	try {
             validationString(string);
@@ -40,6 +44,9 @@ public class SingleURLForm {
             setError(FIELD_URL, e.getMessage());
         }
         url.setString(string);
+        
+    	List<String> tokens = tk.tokenizer(string);
+    	url.setFeatures(tokens);
     	
         if (erreurs.isEmpty()) {
         	resultat = "URL processed successfuly";
