@@ -5,7 +5,7 @@ import java.util.List;
 public class URL {
 
 	private String string;
-	private List<String> features;
+	private List<Double> features;
 	private String tag;
 	
 	/**
@@ -25,14 +25,14 @@ public class URL {
 	/**
 	 * @return the features
 	 */
-	public List<String> getFeatures() {
+	public List<Double> getFeatures() {
 		return features;
 	}
 	
 	/**
 	 * @param features the features to set
 	 */
-	public void setFeatures(List<String> features) {
+	public void setFeatures(List<Double> features) {
 		this.features = features;
 	}
 	

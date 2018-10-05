@@ -31,6 +31,7 @@ public class Index extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//Pre-charge
 		this.getServletContext().getRequestDispatcher( VIEW_FORM ).forward( request, response );
 	}
 

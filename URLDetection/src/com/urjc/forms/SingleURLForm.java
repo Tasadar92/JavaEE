@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import com.urjc.dto.URL;
-import com.urjc.tokenizer.Tokenizer;
+import com.urjc.parsers.Tokenizer;
 
 public class SingleURLForm {
 
@@ -45,8 +45,8 @@ public class SingleURLForm {
         }
         url.setString(string);
         
-    	List<String> tokens = tk.tokenizer(string);
-    	url.setFeatures(tokens);
+    	List<Double> lexicalFeatures = tk.getLexicalFeatures(string);
+    	url.setFeatures(lexicalFeatures);
     	
         if (erreurs.isEmpty()) {
         	resultat = "URL processed successfuly";
