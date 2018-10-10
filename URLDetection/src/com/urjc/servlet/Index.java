@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.python.util.PythonInterpreter;
+
+import com.urjc.conection.ConexionJavaPython;
+
 /**
  * Servlet implementation class Index
  */
@@ -22,16 +26,20 @@ public class Index extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public Index() {
+    	
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		//Pre-charge
+		/*ConexionJavaPython conexion = new ConexionJavaPython();
+		PythonInterpreter interpreter = new PythonInterpreter();*/
+		
 		this.getServletContext().getRequestDispatcher( VIEW_FORM ).forward( request, response );
 	}
 
@@ -39,8 +47,7 @@ public class Index extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
+		
 		String opt = request.getParameter(OPTION);
 		
 		if(opt.equals("singleURL"))

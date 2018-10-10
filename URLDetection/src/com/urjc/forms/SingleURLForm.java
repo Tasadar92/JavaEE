@@ -9,10 +9,17 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.urjc.dto.URL;
-import com.urjc.parsers.Tokenizer;
+import org.python.core.PyObject;
+import org.python.util.PythonInterpreter;
 
-public class SingleURLForm {
+import com.urjc.conection.ConexionJavaPython;
+import com.urjc.dto.URL;
+
+interface PyFunction{
+    public List<String> getTokens(String url);
+}
+
+public class SingleURLForm{
 
 	private static final String FIELD_URL       = "stringURL";
 	private static final String URL_REGEX =
@@ -36,17 +43,41 @@ public class SingleURLForm {
     	String string = getFieldValue(request, FIELD_URL);
     	
     	URL url = new URL();
-    	Tokenizer tk = new Tokenizer();
     	
     	try {
             validationString(string);
         } catch (Exception e) {
             setError(FIELD_URL, e.getMessage());
         }
-        url.setString(string);
-        
-    	List<Double> lexicalFeatures = tk.getLexicalFeatures(string);
-    	url.setFeatures(lexicalFeatures);
+    	url.setString(string);
+    	
+        //Processing URL features
+    	ConexionJavaPython conexion = new ConexionJavaPython();
+    	
+    	PythonInterpreter interpreter = new PythonInterpreter();
+    	List<String> tokens = new ArrayList<>();
+    	
+    	try {
+            
+        	interpreter.execfile("D:/Profiles/dbodasamaro/eclipse-workspace/URLDetection/src/com/urjc/parsers/Tokenizer.py");
+            PyObject getTokens = interpreter.get("getTokens");
+            PyFunction function =  (PyFunction) getTokens.__tojava__(PyFunction.class);
+            
+            for(String s: function.getTokens("https://www.google.es"))
+            	tokens.add(s);
+            
+        } catch (Exception e) {
+        	
+            e.printStackTrace();
+            e.getMessage();
+            e.toString();
+            
+        }finally {
+        	
+        	interpreter.close();
+        	
+		}
+    	url.setFeatures(tokens);
     	
         if (erreurs.isEmpty()) {
         	resultat = "URL processed successfuly";
@@ -92,4 +123,5 @@ public class SingleURLForm {
     	erreurs.put( champ, message );
         
     }
+
 }
