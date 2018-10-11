@@ -1,9 +1,11 @@
 package com.urjc.forms;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +19,10 @@ import com.urjc.dto.URL;
 
 interface PyFunction{
     public List<String> getTokens(String url);
+}
+
+interface PySingleton{
+    public Vector<String> vectorizer();
 }
 
 public class SingleURLForm{
@@ -60,11 +66,13 @@ public class SingleURLForm{
     	try {
             
         	interpreter.execfile("D:/Profiles/dbodasamaro/eclipse-workspace/URLDetection/src/com/urjc/parsers/Tokenizer.py");
-            PyObject getTokens = interpreter.get("getTokens");
-            PyFunction function =  (PyFunction) getTokens.__tojava__(PyFunction.class);
+            //PyObject getTokens = interpreter.get("getTokens");
+        	PyObject vectorizer = interpreter.get("vectorizer");
+            PySingleton function = (PySingleton) vectorizer.__tojava__(PySingleton.class);
             
-            for(String s: function.getTokens("https://www.google.es"))
-            	tokens.add(s);
+            for(String s: function.vectorizer())
+            		tokens.add(s);
+            tokens.remove("");
             
         } catch (Exception e) {
         	

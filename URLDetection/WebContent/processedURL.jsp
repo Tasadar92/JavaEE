@@ -12,6 +12,7 @@
 		<div id="corps">
             <p class="info">${form.resultat}</p>
             <p>URL submitted by you is: <c:out value="${url.string}"/></p>
+            <p>URL features processed: <c:out value="${url.features}"/></p>
             <p>My prediction is: <c:out value="${url.tag}"/></p>
         </div>
 	</body>
